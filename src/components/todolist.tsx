@@ -10,16 +10,20 @@ import {
 	PopoverTrigger,
 	PopoverClose,
 } from './ui/popover';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export default function TodoList() {
 	const dispatch = useAppDispatch();
 	const selector = useAppSelector((state) => state.todo);
 	const todoList = selector.todoList;
 
+	useEffect(() => {
+		localStorage.setItem('todos', JSON.stringify(todoList));
+	}, [todoList]);
+
 	return (
 		<ScrollArea className="h-72 w-1/2">
-			<div className="flex flex-col justify-center items-start gap-5">
+			<div className="flex flex-col justify-center items-start gap-4">
 				{todoList.map((todo) => (
 					<React.Fragment key={todo.id}>
 						<Popover>
